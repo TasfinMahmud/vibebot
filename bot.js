@@ -115,6 +115,12 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMembers,
   ],
+  ws: {
+    large_threshold: 50,
+  },
+  rest: {
+    timeout: 60000,
+  },
 });
 
 // ── Helper: Random Pick ────────────────────────────
@@ -153,6 +159,12 @@ client.once("ready", () => {
     activities: [],
   });
 });
+
+// ── Error Handlers ────────────────────────────────
+client.on("error", (err) => console.error("Client error:", err.message));
+client.on("warn", (msg) => console.warn("Client warn:", msg));
+client.on("disconnect", () => console.log("Bot disconnected! Reconnecting..."));
+client.on("reconnecting", () => console.log("Bot reconnecting..."));
 
 // ════════════════════════════════════════════════════
 // 👋 EVENT: Member Join (Welcome)
