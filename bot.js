@@ -141,11 +141,11 @@ function makeEmbed({ title, description, color, fields, footer, image, thumbnail
 // 📡 EVENT: Ready
 // ════════════════════════════════════════════════════
 client.once("ready", () => {
-  console.log(`\n${"═".repeat(50)}`);
-  console.log(`  🤖 ${config.botName} is ONLINE! (but appearing offline)`);
-  console.log(`  📋 Logged in as: ${client.user.tag}`);
-  console.log(`  🌐 Serving ${client.guilds.cache.size} server(s)`);
-  console.log(`${"═".repeat(50)}\n`);
+  console.log("=== BOT READY ===");
+  console.log("Bot: " + config.botName + " is ONLINE (appearing offline)");
+  console.log("Tag: " + client.user.tag);
+  console.log("Servers: " + client.guilds.cache.size);
+  console.log("=================");
 
   // Set bot to invisible (appears offline to everyone)
   client.user.setPresence({
@@ -780,7 +780,10 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 // ── Login ──────────────────────────────────────────
-client.login(process.env.DISCORD_TOKEN);
+console.log("Attempting Discord login...");
+client.login(process.env.DISCORD_TOKEN)
+  .then(() => console.log("Discord login successful!"))
+  .catch((err) => console.error("Discord login FAILED:", err.message));
 
 // ── Health Check Server (for Render/Cloud hosting) ──
 const http = require("http");
