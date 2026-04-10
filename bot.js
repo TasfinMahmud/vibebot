@@ -781,3 +781,14 @@ client.on("interactionCreate", async (interaction) => {
 
 // ── Login ──────────────────────────────────────────
 client.login(process.env.DISCORD_TOKEN);
+
+// ── Health Check Server (for Render/Cloud hosting) ──
+const http = require("http");
+const PORT = process.env.PORT || 10000;
+http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("VibeBot is alive!");
+}).listen(PORT, () => {
+  console.log(`Health check server running on port ${PORT}`);
+});
+
