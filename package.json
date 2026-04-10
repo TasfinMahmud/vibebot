@@ -1,0 +1,23 @@
+{
+  "name": "vibebot",
+  "version": "1.0.0",
+  "description": "🤖 VibeBot — A fun Discord bot with announcements, insights, auto-replies, and more!",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "deploy": "node deploy-commands.js",
+    "dev": "node bot.js"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "docx": "^9.6.1",
+    "dotenv": "^16.4.7",
+    "nodemailer": "^8.0.5"
+  }
+}
