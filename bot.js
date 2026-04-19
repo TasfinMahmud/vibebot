@@ -153,26 +153,36 @@ function makeEmbed({ title, description, color, fields, footer, image, thumbnail
 }
 
 // ── Helper: Generate AI Reply ──────────────────────
+let lastAICallTime = 0;
+const AI_COOLDOWN_MS = 5000; // 5 second cooldown between AI calls
+
 async function generateAIReply(username, messageContent, hasAttachments) {
   if (!ai) return null;
+
+  // Rate limit: wait at least 5 seconds between API calls
+  const now = Date.now();
+  if (now - lastAICallTime < AI_COOLDOWN_MS) {
+    return null; // Skip if too fast, fallback message will be used
+  }
+  lastAICallTime = now;
 
   try {
     let prompt = `${config.aiSystemPrompt}
 
-The user's Discord display name is: ${username}
-Their message: "${messageContent}"
-${hasAttachments ? "They also uploaded a file/image/document with this message." : ""}
+Discord display name: ${username}
+Message: "${messageContent}"
+${hasAttachments ? "তারা একটি ফাইল/ছবি/ডকুমেন্ট আপলোড করেছেন।" : ""}
 
-Reply to them. Remember: start with "মাননীয় সদস্য, ${username}," then your response. Keep it SHORT (1-3 sentences).`;
+Reply in Bengali. Start with "মাননীয় সদস্য, ${username}," then 1-2 sentences.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
     return response.text || null;
   } catch (error) {
-    console.error("🧠 Gemini AI error:", error.message);
+    console.error("🧠 Gemini AI error:", error.message?.substring(0, 100) || error.message);
     return null;
   }
 }
@@ -269,7 +279,7 @@ client.on("messageCreate", async (message) => {
       if (aiReply) {
         await message.reply(aiReply);
       } else {
-        await message.reply(`মাননীয় সদস্য, ${username}, আপনাকে ধন্যবাদ! আপনার অবদান অত্যন্ত মূল্যবান। 🙏❤️`);
+        await message.reply(`মাননীয় সদস্য, ${username}, আপনাকে অসংখ্য ধন্যবাদ! আপনার এই অবদান আমাদের জন্য অত্যন্ত মূল্যবান। 🙏📄`);
       }
       return;
     }
@@ -283,11 +293,11 @@ client.on("messageCreate", async (message) => {
       });
       const nameList = mentionNames.join(", ");
       
-      const aiReply = await generateAIReply(username, `I mentioned ${nameList} in my message: "${message.content}"`, false);
+      const aiReply = await generateAIReply(username, `আমি ${nameList} কে মেনশন করেছি আমার মেসেজে: "${message.content}"`, false);
       if (aiReply) {
         await message.reply(aiReply);
       } else {
-        await message.reply(`মাননীয় সদস্য, ${nameList} কে জানানো হবে। Patience is a virtue! ✨`);
+        await message.reply(`মাননীয় সদস্য, ${nameList} কে জানানো হবে। ধৈর্য ধরুন, ধৈর্যই সফলতার চাবিকাঠি। ⏳🕊️`);
       }
       return;
     }
