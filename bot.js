@@ -528,13 +528,8 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-// ── Login ──────────────────────────────────────────
-console.log("Attempting Discord login...");
-client.login(process.env.DISCORD_TOKEN)
-  .then(() => console.log("Discord login successful!"))
-  .catch((err) => console.error("Discord login FAILED:", err.message));
-
 // ── Health Check Server (for Render/Cloud hosting) ──
+// IMPORTANT: Start this FIRST so Render marks service as "live" before Discord login
 const http = require("http");
 const PORT = process.env.PORT || 10000;
 http.createServer((req, res) => {
@@ -542,4 +537,29 @@ http.createServer((req, res) => {
   res.end("VibeBot is alive!");
 }).listen(PORT, () => {
   console.log(`Health check server running on port ${PORT}`);
+
+  // ── Login to Discord AFTER port is bound ──
+  const token = process.env.DISCORD_TOKEN;
+  if (!token) {
+    console.error("FATAL: DISCORD_TOKEN is not set!");
+    return;
+  }
+  console.log(`Token length: ${token.length} chars, starts with: ${token.substring(0, 10)}...`);
+  console.log("Attempting Discord login...");
+
+  // Add a timeout — if login takes >30s, something is wrong
+  const loginTimeout = setTimeout(() => {
+    console.error("WARNING: Discord login is taking >30 seconds. WebSocket may be blocked.");
+    console.error("Token first 20 chars:", token.substring(0, 20));
+  }, 30000);
+
+  client.login(token)
+    .then(() => {
+      clearTimeout(loginTimeout);
+      console.log("Discord login successful!");
+    })
+    .catch((err) => {
+      clearTimeout(loginTimeout);
+      console.error("Discord login FAILED:", err.message);
+    });
 });
