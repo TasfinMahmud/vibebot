@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^1.50.1",
     "discord.js": "^14.18.0",
     "docx": "^9.6.1",
     "dotenv": "^16.4.7",
