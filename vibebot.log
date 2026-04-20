@@ -1,0 +1,13 @@
+🧠 Gemini AI: ENABLED
+📧 Email notifications: ENABLED
+Health check server running on port 10000
+Token length: 72 chars, starts with: MTQ5MTg0MT...
+Attempting Discord login...
+Discord login successful!
+=== BOT READY ===
+Bot: VibeBot is ONLINE (appearing offline)
+Tag: VibeBot#3323
+Servers: 4
+=================
+(node:28812) DeprecationWarning: The ready event has been renamed to clientReady to distinguish it from the gateway READY event and will only emit under that name in v15. Please use clientReady instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)

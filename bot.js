@@ -154,12 +154,12 @@ function makeEmbed({ title, description, color, fields, footer, image, thumbnail
 
 // ── Helper: Generate AI Reply ──────────────────────
 let lastAICallTime = 0;
-const AI_COOLDOWN_MS = 5000; // 5 second cooldown between AI calls
+const AI_COOLDOWN_MS = 1000; // 1 second cooldown (Google AI Pro = higher rate limits)
 
 async function generateAIReply(username, messageContent, hasAttachments) {
   if (!ai) return null;
 
-  // Rate limit: wait at least 5 seconds between API calls
+  // Rate limit: wait at least 1 second between API calls
   const now = Date.now();
   if (now - lastAICallTime < AI_COOLDOWN_MS) {
     return null; // Skip if too fast, fallback message will be used

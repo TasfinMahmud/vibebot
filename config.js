@@ -15,11 +15,13 @@ module.exports = {
     announcement: 0x7c3aed,
   },
 
-  // ── FourFold Research Server ─────────────────────
+  // ── AI-Enabled Servers ─────────────────────────────
   // Servers with AI Bengali reply features
   aiEnabledServers: [
     "1431530303872307212", // FourFold Research
     "1427249292392792126", // Second Brain
+    "1463548222109913203", // Alpha & Beta
+    "1466730412364791935", // Alpha & Sigma
   ],
 
   // ── Gemini AI System Prompt ─────────────────────
