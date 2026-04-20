@@ -24,6 +24,13 @@ module.exports = {
     "1466730412364791935", // Alpha & Sigma
   ],
 
+  // ── Ignored Categories (FourFold Research) ────────
+  // Bot does NOTHING in channels under these categories
+  ignoredCategories: [
+    "1431530304916426904", // ⚡Stuff-Thesis ID: T2530969
+    "1438813315198353418", // 🎯Specialization
+  ],
+
   // ── Gemini AI System Prompt ─────────────────────
   // This shapes how the AI responds to messages
   aiSystemPrompt: `You are VibeBot, a respectful and warm assistant for a BRAC University Discord server.

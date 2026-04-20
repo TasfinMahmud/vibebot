@@ -266,6 +266,12 @@ client.on("messageCreate", async (message) => {
   // 🏛️ AI-ENABLED SERVERS — Bengali Reply Behavior
   // ═══════════════════════════════════════════════
   if (isAIServer) {
+    // Skip channels under ignored categories (FourFold Research: Stuff-Thesis & Specialization)
+    const channelCategory = message.channel.parentId;
+    if (channelCategory && config.ignoredCategories.includes(channelCategory)) {
+      return; // Do nothing in these categories
+    }
+
     const username = message.member?.displayName || message.author.displayName || message.author.username;
 
     // ── 1. File Upload → Thank in Bengali + ❤️ React ──
