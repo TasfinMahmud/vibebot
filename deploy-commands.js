@@ -137,6 +137,10 @@ const commands = [
         .setRequired(false)
     )
     .setDefaultMemberPermissions(0),
+  // ── Ping Command ──────────────────────────────────
+  new SlashCommandBuilder()
+    .setName("ping")
+    .setDescription("🏓 Check the bot's latency"),
 ].map((cmd) => cmd.toJSON());
 
 // ── Deploy ─────────────────────────────────────────

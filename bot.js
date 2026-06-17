@@ -524,6 +524,14 @@ client.on("interactionCreate", async (interaction) => {
         break;
       }
 
+      // ── /ping ──────────────────────────────────
+      case "ping": {
+        const sent = await interaction.reply({ content: '🏓 Pinging...', fetchReply: true });
+        const latency = sent.createdTimestamp - interaction.createdTimestamp;
+        await interaction.editReply(`🏓 Pong! Latency: \`${latency}ms\` | API: \`${Math.round(client.ws.ping)}ms\``);
+        break;
+      }
+
       default:
         await interaction.reply({
           content: "Unknown command! 🤔",
